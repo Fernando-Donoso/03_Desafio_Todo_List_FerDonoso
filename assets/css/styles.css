@@ -23,3 +23,23 @@ table {
     border-spacing: 20px 0;
 }
 
+h2 {
+    margin-top: 20px;
+    text-align:  left;
+    margin-left: 830px;
+}
+
+.container_principal {
+    display: flex;
+    margin-top: 20px;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.container_secundario {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 200px;
+}
+
