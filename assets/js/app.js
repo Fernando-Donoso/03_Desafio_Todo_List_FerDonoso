@@ -4,7 +4,7 @@ const btnAgregar = document.querySelector("#agregarTarea")
 const tbody      = document.querySelector("#tareas");
 
 const totalSpan = document.querySelector("#total");
-const realizadasSpan = document.querySelector("#realizadas");
+const completadasSpan = document.querySelector("#completadas");
 
 
 let  tareas = []
@@ -12,7 +12,7 @@ let  tareas = []
 
 // Generar ID aleatorio
 function generarID() {
-    return Math.floor(Math.random() * 100);
+    return Date.now();
 }
 
 
@@ -24,10 +24,10 @@ function renderTareas() {
         html += `
             <tr>
                 <td>${tarea.id}</td>
-                <td>${tarea.texto}</td>
+                <td>${tarea.laTarea}</td>
                 <td>
-                    <input type="checkbox" ${tarea.realizada ? "checked" : ""} 
-                        onchange="toggleRealizada(${tarea.id})">
+                    <input type="checkbox" ${tarea.completada ? "checked" : ""} 
+                        onclick="tareaRealizada(${tarea.id})">
                 </td>
                 <td>
                     <button onclick="eliminarTarea(${tarea.id})">X</button>
@@ -40,7 +40,7 @@ function renderTareas() {
 
     // Actualizar contadores
     totalSpan.textContent = tareas.length;
-    realizadasSpan.textContent = tareas.filter(t => t.realizada).length;
+    completadasSpan.textContent = tareas.filter(t => t.completada).length;
 }
 
 // Agregar tarea
@@ -55,22 +55,27 @@ btnAgregar.addEventListener("click", () => {
     const nuevaTarea = {
         id: generarID(),
         laTarea,
-        realizada: false
+        completada: false
     };
-
 
     tareas.push(nuevaTarea)
     tareaInput.value = "" /* Vaciamos el input */
 
     renderTareas();
-
-
 });
 
 // Marcar como realizada
-function toggleRealizada(id) {
-    const tarea = tareas.find(t => t.id === id);
-    tarea.realizada = !tarea.realizada;
+function tareaRealizada(id) {
+    id = Number(id);
+    tareas = tareas.map(t => {
+        if (t.id === id) {
+            return {
+                ...t,
+                completada: !t.completada
+            };
+        }
+        return t;
+    });
     renderTareas();
 }
 
@@ -82,6 +87,3 @@ function eliminarTarea(id) {
 
 // Render inicial
 renderTareas();
-
-
-

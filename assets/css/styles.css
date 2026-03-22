@@ -18,3 +18,8 @@ padding: 5px 10px;
 border: none;
 cursor: pointer;
 }
+
+table {
+    border-spacing: 20px 0;
+}
+
